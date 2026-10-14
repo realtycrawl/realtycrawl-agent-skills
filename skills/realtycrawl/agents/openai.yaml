@@ -1,0 +1,4 @@
+interface:
+  display_name: "RealtyCrawl"
+  short_description: "Source-linked real estate data through REST or MCP"
+  default_prompt: "Use $realtycrawl to check source availability and prepare a bounded real estate listing request."
