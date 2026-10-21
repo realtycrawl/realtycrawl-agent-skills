@@ -1,6 +1,6 @@
 # Choosing an operation
 
-Read `https://realtycrawl.dev/v1/openapi.json` for the current schema and `https://realtycrawl.dev/v1/meta/capabilities` for enablement. A defined endpoint is not proof that it is active.
+Read `https://realtycrawl.dev/v1/openapi.json` for the current schema and `https://realtycrawl.dev/v1/meta/capabilities` for enablement. A defined endpoint is not proof that every platform supports it. A beta platform-operation capability uses documentation and offline tests, not fresh live verification. Preserve its evidence level and warnings. Unavailable, research and retired capabilities are not callable.
 
 - `GET /v1/meta/capabilities?platform=zillow&country=US`: public, free discovery.
 - `POST /v1/{platform}/listings/search`: source crawl, 50 credits per successful platform. Selectors differ by source and market.
@@ -21,4 +21,4 @@ python3 scripts/realtycrawl_api.py POST /v1/zillow/listings/search --parameters 
 
 The second command spends up to 50 credits. Set `REALTYCRAWL_API_KEY` in the environment. No automatic retries, redirects or pagination. Reuse the key and identical body after an interrupted request; a different logical operation needs a new key. HTTP failures include the request ID, while the API key remains out of output.
 
-[Full documentation](https://docs.realtycrawl.dev)
+[Full documentation](https://realtycrawl.dev/docs)

@@ -2,7 +2,7 @@
   "name": "realtycrawl-agent-skills",
   "version": "1.0.0",
   "description": "Source-linked real estate observations through RealtyCrawl",
-  "homepage": "https://docs.realtycrawl.dev/agent-skills",
+  "homepage": "https://realtycrawl.dev/docs/agent-skills",
   "repository": "https://github.com/realtycrawl/realtycrawl-agent-skills",
   "license": "MIT",
   "skills": [
