@@ -9,7 +9,7 @@ Read `https://realtycrawl.dev/v1/openapi.json` for the current schema and `https
 - `GET /v1/listings/{listing_id}/media`: stored collection, 1 credit per request. Preserve the original limit and use only returned cursors.
 - `GET /v1/zillow/listings/{native_id}`: fetch fresh Zillow detail by ZPID, 50 credits. Optional `transaction=rent` or `status=sold` selects a documented source mode. Read its beta evidence and returned warnings.
 - `POST /v1/zillow/listings/batch`: fetch 1–5 unique numeric ZPIDs from `native_ids`. Reserve 50 credits per requested ID; settle 50 per successful detail. Each item reports success or a sanitized error code. A shared 50-second deadline can leave explicit `BATCH_DEADLINE_EXCEEDED` failures; do not retry them automatically.
-- `GET /v1/listings/{listing_id}/{facts|tax-history|schools|nearby|agent}`: read one source section from an account-owned retained Zillow detail, 1 credit. A search observation may lack these fields; collect supported fresh detail first. Missing sections return `CAPABILITY_UNAVAILABLE`, while published empty collections remain empty.
+- `GET /v1/listings/{listing_id}/{facts|tax-history|schools|nearby|agent}`: read one supported section from an account-owned retained listing, 1 credit. Facts use explicit normalized property fields across supported sources. StreetEasy school observations and Rightmove brokerage attribution are separately supported; other specialist sections remain source-specific. A search observation may lack optional fields. Missing sections return `CAPABILITY_UNAVAILABLE`, while published empty collections remain empty.
 
 Zillow search supports documented USD price, bedroom/bathroom, living-area-in-sqft and property-type bounds, source order/price/newest sorts, and active sale/rent or sold sale modes. Its current location selector remains a US bounding box. Unsupported cursors, arbitrary polygons, `listed_since` and search expansions must not be inferred from another source's schema. Check capabilities and the live operation contract before constructing filters.
 
@@ -45,3 +45,11 @@ python3 scripts/realtycrawl_api.py GET /v1/listings/LISTING_ID/facts --parameter
 Nearby homes preserve an unknown price basis and are not verified sale comparables. School rating scales and distance units remain unknown when the source omits them. Tax history is source-reported rather than a verified tax bill. The `agent` section contains embedded listing attribution, not an independently verified professional profile. No Zestimate, valuation history or new building-unit contract is implied by these sections.
 
 [Full documentation](https://realtycrawl.dev/docs)
+
+## Cross-platform workflows
+
+The contract supports retained property facts for 183 listing sources, source-detail batches for 31 additional platforms, and saved-observation batches across all 196 in-scope sources. Source availability remains operation-specific; new bindings are documentation/offline-test backed.
+
+Use POST /v1/{platform}/listings/batch with items containing canonical URLs or supported native IDs (1–5), retaining existing selector requirements. Reserve 50 credits per item and charge only successful details. The existing Zillow native_ids batch contract is unchanged. Use POST /v1/observations/batch with resources containing a public read operation and returned ID (1–25); reserve 1 credit per item and charge only successful saved reads. Missing or expired observations remain per-item failures. No automatic retries or retention extension.
+
+StreetEasy supplies school observations and Rightmove supplies embedded brokerage attribution where present. Tax history and nearby-home sections remain source-specific. FHFA state-market definitions can be read with GET /v1/markets/{market_id}.
