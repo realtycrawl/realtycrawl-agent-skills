@@ -28,7 +28,9 @@ Zillow listing searches cost 3 credits per returned listing (default limit 10); 
 
 ## Cross-platform workflows
 
-The contract supports retained property facts for 183 listing sources, source-detail batches for 31 additional platforms, and saved-observation batches across all 196 in-scope sources. Source availability remains operation-specific; new bindings are documentation/offline-test backed.
+The contract documents source-specific listing and stay filters, exact source-detail selectors, typed retained energy/flood/planning context, and saved-observation batches across the 196 in-scope sources. Fresh listing and stay detail beta requires explicit operator enablement. New bindings have documentation and offline-test evidence; check live capabilities before executing.
+
+Retained sections cost one credit. Supported fresh stay detail and FHFA index-growth summary operations cost 50 credits on success. NYC zoning labels and source energy/risk fields remain observations without legal or certification claims. Use the generated operation inventory and live schema for each source.
 
 Use POST /v1/{platform}/listings/batch with items containing canonical URLs or supported native IDs (1–5), retaining existing selector requirements. Reserve 50 credits per item and charge only successful details. The existing Zillow native_ids batch contract is unchanged. Use POST /v1/observations/batch with resources containing a public read operation and returned ID (1–25); reserve 1 credit per item and charge only successful saved reads. Missing or expired observations remain per-item failures. No automatic retries or retention extension.
 
